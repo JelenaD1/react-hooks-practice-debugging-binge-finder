@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Grid } from "semantic-ui-react";
 import Adapter from "../Adapter";
 import TVShowList from "./TVShowList";
@@ -13,15 +14,18 @@ function App() {
   const [filterByRating, setFilterByRating] = useState("");
 
   useEffect(() => {
-    Adapter.getShows().then((shows) => setShows(shows));
+    
+    Adapter.getShows()
+    .then(shows => setShows(shows))
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  });
+    window.scrollTo(0, 0)
+  }, [])
 
   function handleSearch(e) {
-    setSearchTerm(e.target.value.toLowerCase());
+    setSearchTerm(e.target.value.toLowerCase())
+   
   }
 
   function handleFilter(e) {
@@ -31,17 +35,23 @@ function App() {
   }
 
   function selectShow(show) {
-    Adapter.getShowEpisodes(show.id).then((episodes) => {
-      setSelectedShow(show);
-      setEpisodes(episodes);
-    });
+    
+   Adapter.getShowEpisodes(show.id)
+      .then(episode => {
+      setSelectedShow(show)
+      setEpisodes(episode)
+      
+     
+    })
   }
 
   let displayShows = shows;
   if (filterByRating) {
     displayShows = displayShows.filter((s) => {
-      s.rating.average >= filterByRating;
-    });
+      return (
+      s.rating.average >= filterByRating
+      )
+    })
   }
 
   return (
